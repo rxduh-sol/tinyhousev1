@@ -13,7 +13,7 @@ import ClientTab from "./components/ClientWindow";
 import JourneySection from "./components/JourneySection";
 import EnergyDossier from "./components/EnergyDossier";
 import FinalReveal from "./components/FinalReveal"; 
-import Preloader from "./components/Preloader"; // Make sure to create this file!
+import Preloader from "./components/Preloader"; 
 
 // Data
 import { STAKEHOLDERS } from "./constants";
@@ -22,15 +22,11 @@ export default function Home() {
   const [stack, setStack] = useState(STAKEHOLDERS);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // PRELOADER LOGIC
   useEffect(() => {
-    // Lock scroll immediately
     document.body.style.overflow = "hidden";
     
-    // Simulate loading/warm-up time
     const timer = setTimeout(() => {
       setIsLoaded(true);
-      // Re-enable scroll after fade
       document.body.style.overflow = "auto";
     }, 3000);
 
@@ -47,10 +43,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen flex flex-col selection:bg-[#00c06f]/30 overflow-clip bg-black text-white">
       
-      {/* 1. THE PRELOADER OVERLAY */}
       <Preloader isLoaded={isLoaded} />
 
-      {/* 2. THE MAIN CONTENT WRAPPER (Handles the global blur exit) */}
       <motion.div
         initial={{ filter: "blur(20px)", opacity: 0 }}
         animate={{ 
@@ -72,7 +66,14 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div className="lg:col-span-5 h-[600px] relative">
-              <SectionHeader tag="Pre-Design" italicSubtitle="Client Profile" />
+              {/* FIX: Added empty title and highlight props to satisfy TypeScript */}
+              <SectionHeader 
+                tag="Pre-Design" 
+                italicSubtitle="Client Profile" 
+                title="" 
+                highlight="" 
+              />
+              
               <div className="relative h-full w-full">
                 <AnimatePresence mode="popLayout">
                   {stack.map((person, index) => (
@@ -102,28 +103,29 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-6 pl-8">
-              <SectionHeader tag="Academic Process" title="The Design" highlight="Brief." />
+              <SectionHeader 
+                tag="Academic Process" 
+                title="The Design" 
+                highlight="Brief." 
+                italicSubtitle="" 
+              />
               <BriefContent />
             </div>
           </div>
         </section>
 
-        {/* PAGE 3: JOURNEY */}
         <div className="relative z-10">
           <JourneySection isLoaded={isLoaded} />
         </div>
 
-        {/* PAGE 4: ENERGY & ECOLOGY */}
         <div className="relative z-10">
           <EnergyDossier isLoaded={isLoaded} />
         </div>
 
-        {/* PAGE 5: THE FINALE & REVEAL */}
         <div className="relative z-10">
           <FinalReveal isLoaded={isLoaded} />
         </div>
 
-        {/* Footer */}
         <footer className="relative z-10 py-20 bg-zinc-950 flex flex-col items-center justify-center border-t border-white/5">
           <p className="text-white/20 font-mono text-[10px] uppercase tracking-[0.5em]">
             Thats kinda it guys. Thanks, Manhiru
