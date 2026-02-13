@@ -18,7 +18,6 @@ const reviews = [
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
 
-// --- SUB-COMPONENT: REVIEW CARD ---
 const ReviewCard = ({ img, name, username, body }) => (
   <figure className={cn(
     "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
@@ -35,8 +34,7 @@ const ReviewCard = ({ img, name, username, body }) => (
   </figure>
 );
 
-// --- MAIN COMPONENT ---
-export default function FinalReveal() {
+export default function FinalReveal({ isLoaded }) {
   const [phase, setPhase] = useState("idle");
 
   const stats = [
@@ -72,12 +70,11 @@ export default function FinalReveal() {
       className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden py-24 scroll-mt-24"
     >
       <AnimatePresence mode="wait">
-        {/* PHASE: IDLE (THE BUTTON) */}
         {phase === "idle" && (
           <motion.button
             key="btn"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
             exit={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
             transition={{ duration: 1 }}
             onClick={startSequence}
@@ -87,7 +84,6 @@ export default function FinalReveal() {
           </motion.button>
         )}
 
-        {/* PHASE: TITLE SEQUENCE */}
         {phase === "title" && (
           <motion.div 
             key="title" 
@@ -101,10 +97,8 @@ export default function FinalReveal() {
           </motion.div>
         )}
 
-        {/* PHASE: DRAMATIC SILENCE */}
         {phase === "silence" && <motion.div key="silence" />}
 
-        {/* PHASE: TECHNICAL STATS BUILD-UP */}
         {phase === "stats" && (
           <motion.div key="stats" className="flex flex-wrap justify-center gap-16 md:gap-24">
             {stats.map((stat, i) => (
@@ -126,11 +120,8 @@ export default function FinalReveal() {
           </motion.div>
         )}
 
-        {/* PHASE: THE FINAL REVEAL */}
         {phase === "reveal" && (
           <motion.div key="reveal" className="w-full flex flex-col items-center px-6">
-            
-            {/* CINEMATIC FLASH */}
             <motion.div 
                initial={{ opacity: 1 }}
                animate={{ opacity: 0 }}
@@ -175,12 +166,11 @@ export default function FinalReveal() {
                 transition={{ delay: 1, duration: 1.5 }}
                 className="absolute bottom-12 left-12 text-left"
               >
-                <p className="text-[#00c06f] font-mono text-[10px] tracking-[1em] uppercase mb-4 opacity-60 italic">Architectural Concept Completed</p>
+                <p className="text-[#00c06f] font-mono text-[10px] tracking-[1em] uppercase mb-4 opacity-60 italic">Yes I Built It!</p>
                 <h3 className="text-6xl md:text-9xl font-black text-white uppercase tracking-tighter italic leading-none">Tiny House V1</h3>
               </motion.div>
             </motion.div>
 
-            {/* REVIEWS MARQUEE */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}

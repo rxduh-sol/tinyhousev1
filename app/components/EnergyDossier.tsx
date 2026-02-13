@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { IconCloud } from "./IconCloud";
 
-// Added Variants type and 'as const' to the ease array
+// 1. Define the props interface for TS
+interface EnergyDossierProps {
+  isLoaded: boolean;
+}
+
+// 2. Apply Variants type and use 'as const' to satisfy the cubic-bezier requirement
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -19,12 +24,12 @@ const itemVariants: Variants = {
     opacity: 1, 
     transition: { 
       duration: 0.8, 
-      ease: [0.16, 1, 0.3, 1] as const // This 'as const' is the magic fix
+      ease: [0.16, 1, 0.3, 1] as const // This 'as const' locks the 4-number tuple
     } 
   }
 };
 
-export default function EnergyDossier() {
+export default function EnergyDossier({ isLoaded }: EnergyDossierProps) {
   const [vitals, setVitals] = useState([40, 70, 45, 90, 65, 80, 30]);
 
   useEffect(() => {
@@ -46,10 +51,10 @@ export default function EnergyDossier() {
         viewport={{ once: true, amount: 0.2 }}
         className="max-w-[1800px] w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch"
       >
+        {/* The rest of your JSX remains exactly the same */}
         
         {/* LEFT: BENTO SYSTEM */}
         <div className="lg:col-span-7 grid grid-cols-2 gap-8">
-          
           {/* 1. Main Solar Card */}
           <motion.div 
             variants={itemVariants}

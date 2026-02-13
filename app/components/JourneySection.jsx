@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import LoadingScreen from "./ProgressCirlce"; 
+// Note: LoadingScreen import removed to keep the flow clean
 import { JOURNEY_STAGES } from "../constants";
 
 // Modular Components
@@ -13,12 +13,17 @@ import { NotebookFrame } from "./NotebookFrame";
 import { TypewriterText } from "./TypewriterText";
 import Bg3 from "./bg3.jsx"; 
 
-export default function JourneySection() {
+// Added { isLoaded } here to satisfy the parent component
+export default function JourneySection({ isLoaded }) {
   const [[page, direction], setPage] = useState([0, 0]);
   const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => { setIsMounted(true); }, []);
-  if (!isMounted) return <LoadingScreen />;
+  useEffect(() => { 
+    setIsMounted(true); 
+  }, []);
+
+  // Removed the internal LoadingScreen return to prevent double-loading
+  if (!isMounted) return null; 
 
   const currentStage = JOURNEY_STAGES[page];
   const paginate = (dir) => {
@@ -27,7 +32,6 @@ export default function JourneySection() {
   };
 
   return (
-    /* ADDED id="journey" AND scroll-mt-24 HERE */
     <section 
       id="journey" 
       className="relative bg-zinc-950 h-screen w-full flex flex-col items-center justify-between py-6 overflow-hidden border-t border-white/5 px-8 scroll-mt-24"
