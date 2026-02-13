@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { IconCloud } from "./IconCloud";
 
-const containerVariants = {
+// Added Variants type and 'as const' to the ease array
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -11,12 +12,15 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 40, opacity: 0 },
   visible: { 
     y: 0, 
     opacity: 1, 
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+    transition: { 
+      duration: 0.8, 
+      ease: [0.16, 1, 0.3, 1] as const // This 'as const' is the magic fix
+    } 
   }
 };
 
@@ -116,7 +120,7 @@ export default function EnergyDossier() {
               <div className="h-px bg-white/10 w-full" />
 
               <div>
-                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Live Something Rate</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Live Status</p>
                 <div className="flex gap-1.5 h-12 items-end">
                   {vitals.map((h, i) => (
                     <motion.div 
@@ -136,7 +140,7 @@ export default function EnergyDossier() {
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                   className="inline-block"
                 >
-                  * I have no clue i added this for fun*
+                  * Real-time Data Monitoring Sequence Active *
                 </motion.span>
               </p>
             </div>
@@ -148,7 +152,6 @@ export default function EnergyDossier() {
           variants={itemVariants}
           className="lg:col-span-5 relative flex flex-col items-center justify-center min-h-[700px]"
         >
-          {/* Faded Background Watermark */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
             <h3 className="text-[12rem] font-black text-white/[0.02] uppercase tracking-tighter leading-none rotate-12">
               Impact
