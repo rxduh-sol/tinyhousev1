@@ -125,7 +125,7 @@ export default function EnergyDossier({ isLoaded }: EnergyDossierProps) {
               <div className="h-px bg-white/10 w-full" />
 
               <div>
-                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Live Status</p>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-3">Something Important</p>
                 <div className="flex gap-1.5 h-12 items-end">
                   {vitals.map((h, i) => (
                     <motion.div 
@@ -145,7 +145,7 @@ export default function EnergyDossier({ isLoaded }: EnergyDossierProps) {
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                   className="inline-block"
                 >
-                  * Real-time Data Monitoring Sequence Active *
+                  * No Clue What This Is For I Ran Outta Ideas*
                 </motion.span>
               </p>
             </div>
